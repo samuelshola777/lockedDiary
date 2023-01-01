@@ -11,7 +11,7 @@ class DiaryPagesTest {
     @BeforeEach
     @Test
     void setUp() {
-        page = new DiaryPages();
+        page = new DiaryPages("boneshaker");
     }
     @Test
     void testIfDiaryPageCanBeUnlock(){
@@ -33,7 +33,7 @@ class DiaryPagesTest {
         page.setPassword("gold");
         page.unlock("gold");
         assertEquals(false, page.getIsLock());
-        page.creationDate("09","01");
+        page.setCreationDate("09","01");
         page.setTitle("the day that never come");
         assertEquals("the day that never come", page.getTitle());
     }
@@ -43,7 +43,7 @@ class DiaryPagesTest {
         page.setPassword("gold");
         page.unlock("gold");
         assertEquals(false, page.getIsLock());
-        page.creationDate("09","01");
+        page.setCreationDate("09","01");
        page.setTitle("the day that never come");
         assertEquals("the day that never come", page.getTitle());
         page.setBody("i dreams i was so scared  now i will listen cause no else cares ");
@@ -58,12 +58,14 @@ class DiaryPagesTest {
     }
     @Test
     void testThatDiaryCanHaveCreationDate() throws DiaryPageExeption {
-        assertEquals("0901", page.creationDate("09","01"));
+        page.setCreationDate("09","1");
+        assertEquals("0901", page.getCreationDate());
 
     }
 
     @Test
     void testThatWeCanWriteEventsOnDiaryPage() throws DiaryPageExeption {
+        page.unlock("boneshaker");
         String title = "the glorious celebration ";
         String messageBody = "the joy of the lord is my strength i am strong the love of christ ";
         page.writeEventsOnPage("30","6" ,title, messageBody);
@@ -75,11 +77,46 @@ class DiaryPagesTest {
 
     @Test
     void testThatWeCanUpdateMessageBody() throws DiaryPageExeption {
+        page.unlock("boneshaker");
+        String title = "the glorious celebration ";
+        String space = " ";
+        String messageBody = "the joy of the lord is my strength i am strong the love of christ ";
+        page.writeEventsOnPage("30","6" ,title, messageBody);
+        String testText = "i have 2 million";
+        page.UpdateMessageBody(testText );
+        assertEquals(messageBody + space+testText, page.getMessageBody());
+    }
+    @Test
+    void testThatTitleCanBeUpdated() throws DiaryPageExeption {
+        page.unlock("boneshaker");
+        String title = "the glorious celebration ";
+        String updatedTitle = "my name is samuel shola";
+        String space = " ";
+        String messageBody = "the joy of the lord is my strength i am strong the love of christ ";
+        page.writeEventsOnPage("30","6" ,title, messageBody);
+page.UpdateTitle(updatedTitle);
+assertEquals(title+space+updatedTitle, page.getTitle());
+    }
+    @Test
+    void testThatTitleCanBeChanged() throws DiaryPageExeption {
+        page.unlock("boneshaker");
+        String changedTitle = "i have no reason to do this bt i just wanna ";
         String title = "the glorious celebration ";
         String messageBody = "the joy of the lord is my strength i am strong the love of christ ";
         page.writeEventsOnPage("30","6" ,title, messageBody);
-        int response = 1;
-        page.UpdateDiaryPage(response, "i have 2 million");
+        page.changeTitle(changedTitle);
+        assertEquals(changedTitle, page.getTitle());
+    }
+    @Test
+    void testThatWecanDeleteMessageBody() throws DiaryPageExeption {
+        page.unlock("boneshaker");
+        String changedTitle = "i have no reason to do this bt i just wanna ";
+        String title = "the glorious celebration ";
+        String messageBody = "the joy of the lord is my strength i am strong the love of christ ";
+        page.writeEventsOnPage("30","6" ,title, messageBody);
+        page.deleteMessageBody();
+        assertEquals("",page.getMessageBody());
+
     }
 
 }

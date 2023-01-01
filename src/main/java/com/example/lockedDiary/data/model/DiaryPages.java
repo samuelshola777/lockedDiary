@@ -5,13 +5,12 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
 @Data
 
 public class DiaryPages {
     @Getter
     private Boolean isLock = true;
-    @Getter
+//    @Getter
     @Setter
     private String password;
     @Setter
@@ -33,6 +32,9 @@ public class DiaryPages {
         }
         return getIsLock();
     }
+    public DiaryPages(String password){
+        this.password = password;
+    }
 
 
     public void lockDiary(String lockPassword) {
@@ -52,9 +54,11 @@ public class DiaryPages {
         this.messageBody = messageBody;
         return "succeful";
     }
+public String getCreationDate(){
+        return date+month;
+}
 
-
-    public String creationDate(String date, String month) throws DiaryPageExeption {
+    public void setCreationDate(String date, String month) throws DiaryPageExeption {
         if (Integer.parseInt(date) > 30 || Integer.parseInt(date) < 0){
             throw new DiaryPageExeption("you have entered an invalid date");
         }if (Integer.parseInt(month) > 12 || Integer.parseInt(month) < 0){
@@ -70,10 +74,14 @@ public class DiaryPages {
         }
 
         this.month = month;
-        return date+month;
+//        return date+month;
     }
 
     public void writeEventsOnPage(String date, String month, String title, String messageBody) throws DiaryPageExeption {
+     if (isLock == true){
+         throw new DiaryPageExeption("diary page is lock " +
+                 "please unlock before you proceed");
+     }
       String zero = "0";
        if (date.length() < 2){
            date = zero + date ;
@@ -83,22 +91,40 @@ public class DiaryPages {
        if (month.length() < 2 ){
            month = zero + month;
        }
-       creationDate(date, month);
+       setCreationDate(date, month);
         this.month = month;
         this.title = title;
         this.messageBody = messageBody;
     }
 
 
-    public void UpdateDiaryPage(int response, String updateMessageBody) throws DiaryPageExeption {
+    public void UpdateMessageBody( String updateMessageBody) throws DiaryPageExeption {
         String space = " ";
-        switch (response ){
-            case 1 :
                 if (messageBody == null ){
                     throw new DiaryPageExeption("these nothing to update," +
                             "you can only update a saved diary message ");
                 }
-                setMessageBody(space + updateMessageBody);
+                setMessageBody(messageBody +  space+updateMessageBody);
+    }
+    public void UpdateTitle( String updateTitle) throws DiaryPageExeption {
+        String space = " ";
+                if (title == null ){
+                    throw new DiaryPageExeption("these nothing to update," +
+                            "you can only update a saved diary message ");
+                } if (messageBody == null ){
+            throw new DiaryPageExeption("these nothing to update," +
+                    "you can only update a saved diary message ");
         }
+                setTitle(title +  space+updateTitle);
+    }
+
+    public String changeTitle(String changedTitle) throws DiaryPageExeption {
+        setTitle(changedTitle);
+        return "title changed succeful";
+    }
+
+    public String deleteMessageBody() throws DiaryPageExeption {
+        setBody("");
+        return "messageBody Deleted successful";
     }
 }
