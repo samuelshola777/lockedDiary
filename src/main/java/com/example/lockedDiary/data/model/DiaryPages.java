@@ -98,7 +98,7 @@ public String getCreationDate(){
     }
 
 
-    public void UpdateMessageBody( String updateMessageBody) throws DiaryPageExeption {
+    public void updateMessageBody(String updateMessageBody) throws DiaryPageExeption {
         String space = " ";
                 if (messageBody == null ){
                     throw new DiaryPageExeption("these nothing to update," +
@@ -106,7 +106,7 @@ public String getCreationDate(){
                 }
                 setMessageBody(messageBody +  space+updateMessageBody);
     }
-    public void UpdateTitle( String updateTitle) throws DiaryPageExeption {
+    public void updateTitle( String updateTitle) throws DiaryPageExeption {
         String space = " ";
                 if (title == null ){
                     throw new DiaryPageExeption("these nothing to update," +
@@ -126,5 +126,16 @@ public String getCreationDate(){
     public String deleteMessageBody() throws DiaryPageExeption {
         setBody("");
         return "messageBody Deleted successful";
+    }
+    public String toString(){
+        return String.format("""
+                Date : %s  \n
+                ============================\n
+                Month : %s \n
+                ============================\n
+                Title : %s \n
+                ===========================\n
+                Message : %s \n
+                """, getDate(), getMonth(), getTitle(), getMessageBody());
     }
 }

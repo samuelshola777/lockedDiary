@@ -36,13 +36,17 @@ DiaryPages diaryPages = new DiaryPages("boneshaker");
         diaryPages.unlock("boneshaker");
         diaryPages.writeEventsOnPage("7","5", title, message);
         diary.writeOnDiaryPage(diaryPages);
+
+
         String title2 = "you will always be my heart";
         String message2 = "stand near don't leave don't look the rain, all in " +
                 "the black and blue ";
         DiaryPages pages2 = new DiaryPages("alexpacker");
         pages2.unlock("alexpacker");
-        pages2.writeEventsOnPage("23", "4", title2, message2);
+        pages2.writeEventsOnPage("3", "4", title2, message2);
         diary.writeOnDiaryPage(pages2);
+
+
          String title3 = " my life is a testimony ";
          String message3 = " wen i think of the goodness of jesus and all he has done" +
                  "for me, my very soul will shout halleluyah. praise God for saving me";
@@ -50,9 +54,11 @@ DiaryPages diaryPages = new DiaryPages("boneshaker");
          pages3.unlock("blackMamber");
          pages3.writeEventsOnPage("14", "6",title3, message3);
          diary.writeOnDiaryPage(pages3);
+
+
          assertEquals(3,diary.CountDiaryPage());
 
-         assertEquals(title,diary.findByDate("7","5").getTitle() );
+         assertEquals(title,diary.findByDate("7","5","boneshaker").getTitle() );
 
     }
    @Test

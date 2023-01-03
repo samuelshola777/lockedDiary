@@ -83,7 +83,7 @@ class DiaryPagesTest {
         String messageBody = "the joy of the lord is my strength i am strong the love of christ ";
         page.writeEventsOnPage("30","6" ,title, messageBody);
         String testText = "i have 2 million";
-        page.UpdateMessageBody(testText );
+        page.updateMessageBody(testText );
         assertEquals(messageBody + space+testText, page.getMessageBody());
     }
     @Test

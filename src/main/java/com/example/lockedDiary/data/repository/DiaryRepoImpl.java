@@ -20,7 +20,10 @@ public class DiaryRepoImpl implements DiaryRepository{
     }
 
     @Override
-    public DiaryPages findByDate(String date, String month) throws DiaryPageExeption {
+    public DiaryPages findByDate(String date, String month, String unlockpassword) throws DiaryPageExeption {
+//        if (!unlockpassword.equals(pages.getPassword())){
+//            throw new DiaryPageExeption("incorrect password ");
+//        }
     String zero = "0";
     if (date.length() < 2){
       date =  zero+date;
@@ -30,6 +33,19 @@ public class DiaryRepoImpl implements DiaryRepository{
     String creationDate = date + month;
         return diaryPageList.get(creationDate);
     }
+
+
+    @Override
+    public HashMap<String, DiaryPages> viewAllDiaryPages() {
+        for (int i = 0; i < diaryPageList.size(); i++) {
+            if (diaryPageList.size() > 0){
+                return diaryPageList;
+            }
+
+        }
+        return null;
+    }
+
 
     @Override
     public String deletePage(String date, String month) {
